@@ -1,9 +1,9 @@
-# 🏡 Sistem Pendukung Keputusan Pemilihan Airbnb Terbaik  
+# Sistem Pendukung Keputusan Pemilihan Airbnb Terbaik  
 ## Metode Fuzzy Mamdani Berbasis Streamlit
 
 ---
 
-## 📌 Deskripsi Project
+## Deskripsi Project
 
 Project ini merupakan implementasi **Sistem Pendukung Keputusan (SPK)** untuk membantu pengguna dalam memilih listing Airbnb terbaik di Eropa.
 
@@ -13,7 +13,7 @@ Aplikasi ini dibangun menggunakan **Python** dan **Streamlit** sebagai antarmuka
 
 ---
 
-## 🎯 Tujuan
+## Tujuan
 
 - Membantu pengguna menentukan Airbnb terbaik berdasarkan kriteria tertentu  
 - Mengimplementasikan metode **Fuzzy Mamdani** dalam kasus nyata  
@@ -21,7 +21,7 @@ Aplikasi ini dibangun menggunakan **Python** dan **Streamlit** sebagai antarmuka
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 Dataset yang digunakan berasal dari Kaggle:
 
@@ -37,7 +37,7 @@ Berisi data listing Airbnb di beberapa kota Eropa dengan atribut seperti:
 
 ---
 
-## ⚙️ Metode yang Digunakan
+## Metode yang Digunakan
 
 Metode: **Fuzzy Mamdani**
 
@@ -54,7 +54,7 @@ Tahapan:
 
 ---
 
-## 🧠 Kriteria Penilaian
+## Kriteria Penilaian
 
 | Kriteria | Tipe |
 |--------|------|
@@ -66,7 +66,7 @@ Tahapan:
 
 ---
 
-## 🏗️ Struktur Folder
+## Struktur Folder
 
 ```bash
 project-airbnb-fuzzy/
