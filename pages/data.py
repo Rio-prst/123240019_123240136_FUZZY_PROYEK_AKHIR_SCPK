@@ -25,7 +25,7 @@ criteria_df.columns = [
     "Capacity"
 ]
 
-st.title("Dataset (Criteria Only)")
+st.title("Dataset")
 st.markdown("---")
 
 #Filter
