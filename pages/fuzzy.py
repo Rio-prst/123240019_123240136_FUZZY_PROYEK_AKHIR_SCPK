@@ -135,7 +135,7 @@ rule_table = pd.DataFrame([
     {"Rule": "R26",  "Kondisi": "Price=High AND Distance=Far AND Satisfaction=Low",    "Output": "LOW"},
 ])
 
-with st.expander("📋 Lihat Rule Base (26 Rules)"):
+with st.expander("Lihat Rule Base (26 Rules)"):
     st.dataframe(rule_table, use_container_width=True)
 
 #Kalkulasi
@@ -247,7 +247,7 @@ if st.button("Run Calculation"):
     ranking = data.sort_values(by="Score", ascending=False).reset_index(drop=True)
     ranking.index += 1  
 
-    st.success("✅ Pure Fuzzy Mamdani Completed")
+    st.success("Calculation Completed") 
 
     # ── STATISTIK SKOR ───────────────────
     st.subheader("Score Statistics")
