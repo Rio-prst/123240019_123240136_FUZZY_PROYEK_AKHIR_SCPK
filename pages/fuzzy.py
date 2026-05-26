@@ -245,6 +245,9 @@ if st.button("Run Calculation"):
         scores.append(round(final_score, 4))
 
     data["Score"] = scores
+    
+    # MENYIMPAN INDEKS ASLI DATASET SEBELUM DI-SORTING
+    data["ID"] = data.index
 
     ranking = data.sort_values(by="Score", ascending=False).reset_index(drop=True)
     ranking.index += 1  
@@ -262,13 +265,18 @@ if st.button("Run Calculation"):
     # ── TOP 10 ───────────────────────────
     st.subheader("Top 10 Recommendation")
     top10 = ranking.head(10)
-    st.dataframe(top10, use_container_width=True)
+    
+    column_order = ["ID", "Price", "Distance", "Cleanliness", "Satisfaction", "Capacity", "Score"]
+    st.dataframe(top10[column_order], use_container_width=True)
 
     # ── VISUALISASI BAR ──────────────────
     st.subheader("Top 10 Score Visualization")
     fig, ax = plt.subplots(figsize=(10, 5))
+    
+    y_labels = [f"Rank {r} (Baris Ke-{top10['ID'].iloc[r-1]})" for r in range(1, len(top10)+1)]
+    
     bars = ax.barh(
-        [f"#{r} (idx {top10.index[r-1]})" for r in range(1, len(top10)+1)],
+        y_labels,
         top10["Score"],
         color="steelblue"
     )

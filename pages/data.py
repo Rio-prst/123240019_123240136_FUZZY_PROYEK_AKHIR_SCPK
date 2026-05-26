@@ -13,7 +13,7 @@ criteria_df = df[[
     "dist",
     "cleanliness_rating",
     "guest_satisfaction_overall",
-    "person_capacity"
+    "person_capacity",
 ]]
 
 # Rename biar lebih readable
