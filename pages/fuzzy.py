@@ -63,76 +63,78 @@ input_capacity = st.slider(
 )
 
 #Universe
-x_price        = np.arange(data["Price"].min(),    data["Price"].max(),    1)
-x_distance     = np.arange(data["Distance"].min(), data["Distance"].max(), 0.1)
-x_clean        = np.arange(0,   11,  1)
+x_price = np.arange(data["Price"].min(), data["Price"].max(),    1)
+x_distance = np.arange(data["Distance"].min(), data["Distance"].max(), 0.1)
+x_clean = np.arange(0,   11,  1)
 x_satisfaction = np.arange(0,  101,  1)
-x_capacity     = np.arange(0,   11,  1)
-x_score        = np.arange(0,  101,  1)
+x_capacity = np.arange(0,   11,  1)
+x_score = np.arange(0,  101,  1)
 
 #MEMBERSHIP FUNCTION
 
 # Price
 price_low  = fuzz.trimf(x_price, [x_price.min(), x_price.min(), input_price])
 price_med  = fuzz.trimf(x_price, [x_price.min(), input_price,   x_price.max()])
-price_high = fuzz.trimf(x_price, [input_price,   x_price.max(), x_price.max()])
+price_high = fuzz.trimf(x_price, [input_price, x_price.max(), x_price.max()])
 
 # Distance
 dist_near = fuzz.trimf(x_distance, [x_distance.min(), x_distance.min(), input_distance])
-dist_med  = fuzz.trimf(x_distance, [x_distance.min(), input_distance,   x_distance.max()])
-dist_far  = fuzz.trimf(x_distance, [input_distance,   x_distance.max(), x_distance.max()])
+dist_med  = fuzz.trimf(x_distance, [x_distance.min(), input_distance, x_distance.max()])
+dist_far  = fuzz.trimf(x_distance, [input_distance, x_distance.max(), x_distance.max()])
 
 # Cleanliness
-mf_clean_low  = fuzz.trimf(x_clean, [0, 0,                  input_cleanliness])
-mf_clean_med  = fuzz.trimf(x_clean, [0, input_cleanliness,  10])
+mf_clean_low  = fuzz.trimf(x_clean, [0, 0, input_cleanliness])
+mf_clean_med  = fuzz.trimf(x_clean, [0, input_cleanliness, 10])
 mf_clean_high = fuzz.trimf(x_clean, [input_cleanliness, 10, 10])
 
 # Satisfaction
-mf_sat_low  = fuzz.trimf(x_satisfaction, [0, 0,                   input_satisfaction])
-mf_sat_med  = fuzz.trimf(x_satisfaction, [0, input_satisfaction,  100])
+mf_sat_low  = fuzz.trimf(x_satisfaction, [0, 0, input_satisfaction])
+mf_sat_med  = fuzz.trimf(x_satisfaction, [0, input_satisfaction, 100])
 mf_sat_high = fuzz.trimf(x_satisfaction, [input_satisfaction, 100, 100])
 
 # Capacity
-mf_cap_low  = fuzz.trimf(x_capacity, [0, 0,               input_capacity])
-mf_cap_med  = fuzz.trimf(x_capacity, [0, input_capacity,  10])
+mf_cap_low  = fuzz.trimf(x_capacity, [0, 0, input_capacity])
+mf_cap_med  = fuzz.trimf(x_capacity, [0, input_capacity, 10])
 mf_cap_high = fuzz.trimf(x_capacity, [input_capacity, 10, 10])
 
 # Output
-out_low  = fuzz.trimf(x_score, [0,  0,   50])
-out_med  = fuzz.trimf(x_score, [25, 50,  75])
+out_low  = fuzz.trimf(x_score, [0,  0, 50])
+out_med  = fuzz.trimf(x_score, [25, 50, 75])
 out_high = fuzz.trimf(x_score, [50, 100, 100])
 
 #Rule Base
 rule_table = pd.DataFrame([
     # HIGH
-    {"Rule": "R01", "Kondisi": "Price=Low AND Distance=Near",                          "Output": "HIGH"},
-    {"Rule": "R02", "Kondisi": "Price=Low AND Distance=Near AND Cleanliness=High",     "Output": "HIGH"},
-    {"Rule": "R03", "Kondisi": "Cleanliness=High AND Satisfaction=High",               "Output": "HIGH"},
-    {"Rule": "R04", "Kondisi": "Capacity=High AND Satisfaction=High",                  "Output": "HIGH"},
-    {"Rule": "R05", "Kondisi": "Price=Low AND Satisfaction=High",                      "Output": "HIGH"},
+    {"Rule": "R01", "Kondisi": "Price=Low AND Distance=Near", "Output": "HIGH"},
+    {"Rule": "R02", "Kondisi": "Price=Low AND Distance=Near AND Cleanliness=High", "Output": "HIGH"},
+    {"Rule": "R03", "Kondisi": "Cleanliness=High AND Satisfaction=High", "Output": "HIGH"},
+    {"Rule": "R04", "Kondisi": "Capacity=High AND Satisfaction=High", "Output": "HIGH"},
+    {"Rule": "R05", "Kondisi": "Price=Low AND Satisfaction=High", "Output": "HIGH"},
     {"Rule": "R06", "Kondisi": "Price=Low AND Cleanliness=High AND Satisfaction=High", "Output": "HIGH"},
-    {"Rule": "R07", "Kondisi": "Distance=Near AND Cleanliness=High",                   "Output": "HIGH"},
-    {"Rule": "R08", "Kondisi": "Distance=Near AND Satisfaction=High",                  "Output": "HIGH"},
+    {"Rule": "R07", "Kondisi": "Distance=Near AND Cleanliness=High", "Output": "HIGH"},
+    {"Rule": "R08", "Kondisi": "Distance=Near AND Satisfaction=High", "Output": "HIGH"},
+
     # MEDIUM
-    {"Rule": "R09",  "Kondisi": "Price=Med AND Distance=Med",                          "Output": "MEDIUM"},
-    {"Rule": "R10",  "Kondisi": "Cleanliness=Med AND Satisfaction=Med",                "Output": "MEDIUM"},
-    {"Rule": "R11",  "Kondisi": "Capacity=Med AND Satisfaction=Med",                   "Output": "MEDIUM"},
-    {"Rule": "R12",  "Kondisi": "Price=Low AND Capacity=Low",                          "Output": "MEDIUM"},
-    {"Rule": "R13",  "Kondisi": "Price=Med AND Cleanliness=Med",                       "Output": "MEDIUM"},
-    {"Rule": "R14",  "Kondisi": "Price=Med AND Satisfaction=Med",                      "Output": "MEDIUM"},
-    {"Rule": "R15",  "Kondisi": "Distance=Med AND Cleanliness=Med",                    "Output": "MEDIUM"},
-    {"Rule": "R16",  "Kondisi": "Distance=Near AND Cleanliness=Med",                   "Output": "MEDIUM"},
-    {"Rule": "R17",  "Kondisi": "Price=Low AND Distance=Far",                          "Output": "MEDIUM"},
-    {"Rule": "R18",  "Kondisi": "Price=High AND Distance=Near AND Cleanliness=High",   "Output": "MEDIUM"},
+    {"Rule": "R09", "Kondisi": "Price=Med AND Distance=Med", "Output": "MEDIUM"},
+    {"Rule": "R10", "Kondisi": "Cleanliness=Med AND Satisfaction=Med", "Output": "MEDIUM"},
+    {"Rule": "R11", "Kondisi": "Capacity=Med AND Satisfaction=Med", "Output": "MEDIUM"},
+    {"Rule": "R12", "Kondisi": "Price=Low AND Capacity=Low", "Output": "MEDIUM"},
+    {"Rule": "R13", "Kondisi": "Price=Med AND Cleanliness=Med", "Output": "MEDIUM"},
+    {"Rule": "R14", "Kondisi": "Price=Med AND Satisfaction=Med", "Output": "MEDIUM"},
+    {"Rule": "R15", "Kondisi": "Distance=Med AND Cleanliness=Med", "Output": "MEDIUM"},
+    {"Rule": "R16", "Kondisi": "Distance=Near AND Cleanliness=Med", "Output": "MEDIUM"},
+    {"Rule": "R17", "Kondisi": "Price=Low AND Distance=Far", "Output": "MEDIUM"},
+    {"Rule": "R18", "Kondisi": "Price=High AND Distance=Near AND Cleanliness=High", "Output": "MEDIUM"},
+
     # LOW
-    {"Rule": "R19",  "Kondisi": "Price=High AND Distance=Far",                         "Output": "LOW"},
-    {"Rule": "R20",  "Kondisi": "Cleanliness=Low AND Satisfaction=Low",                "Output": "LOW"},
-    {"Rule": "R21",  "Kondisi": "Price=High AND Satisfaction=Low",                     "Output": "LOW"},
-    {"Rule": "R22",  "Kondisi": "Price=High AND Cleanliness=Low",                      "Output": "LOW"},
-    {"Rule": "R23",  "Kondisi": "Distance=Far AND Satisfaction=Low",                   "Output": "LOW"},
-    {"Rule": "R24",  "Kondisi": "Distance=Far AND Cleanliness=Low",                    "Output": "LOW"},
-    {"Rule": "R25",  "Kondisi": "Satisfaction=Low AND Cleanliness=Low",                "Output": "LOW"},
-    {"Rule": "R26",  "Kondisi": "Price=High AND Distance=Far AND Satisfaction=Low",    "Output": "LOW"},
+    {"Rule": "R19", "Kondisi": "Price=High AND Distance=Far", "Output": "LOW"},
+    {"Rule": "R20", "Kondisi": "Cleanliness=Low AND Satisfaction=Low", "Output": "LOW"},
+    {"Rule": "R21", "Kondisi": "Price=High AND Satisfaction=Low", "Output": "LOW"},
+    {"Rule": "R22", "Kondisi": "Price=High AND Cleanliness=Low", "Output": "LOW"},
+    {"Rule": "R23", "Kondisi": "Distance=Far AND Satisfaction=Low", "Output": "LOW"},
+    {"Rule": "R24", "Kondisi": "Distance=Far AND Cleanliness=Low", "Output": "LOW"},
+    {"Rule": "R25", "Kondisi": "Satisfaction=Low AND Cleanliness=Low", "Output": "LOW"},
+    {"Rule": "R26", "Kondisi": "Price=High AND Distance=Far AND Satisfaction=Low", "Output": "LOW"}  
 ])
 
 with st.expander("Lihat Rule Base (26 Rules)"):
@@ -144,10 +146,10 @@ if st.button("Run Calculation"):
     scores = []
 
     for i in range(len(data)):
-        p   = data.iloc[i]["Price"]
-        d   = data.iloc[i]["Distance"]
-        c   = data.iloc[i]["Cleanliness"]
-        s   = data.iloc[i]["Satisfaction"]
+        p = data.iloc[i]["Price"]
+        d = data.iloc[i]["Distance"]
+        c = data.iloc[i]["Cleanliness"]
+        s = data.iloc[i]["Satisfaction"]
         cap = data.iloc[i]["Capacity"]
 
         # ── FUZZIFIKASI ──────────────────
