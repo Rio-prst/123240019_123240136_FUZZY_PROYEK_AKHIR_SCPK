@@ -245,8 +245,6 @@ if st.button("Run Calculation"):
         scores.append(round(final_score, 4))
 
     data["Score"] = scores
-    
-    # MENYIMPAN INDEKS ASLI DATASET SEBELUM DI-SORTING
     data["ID"] = data.index
 
     ranking = data.sort_values(by="Score", ascending=False).reset_index(drop=True)
